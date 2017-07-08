@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cau2;
+package cau3;
 
 /**
  *
@@ -12,13 +12,12 @@ package cau2;
 public class Cau3 {
 
     /**
-     * Vi?t ch??ng tr�nh th�a m�n c�c y�u c?u sau: a.	X�y d?ng m?t ph??ng th?c
-     * ?? x�c ??nh xem m?t s? nguy�n N c� ph?i l� s? ch?n v� chia h?t cho 3 hay
-     * kh�ng. b.	S? d?ng ph??ng th?c v?a vi?t ? tr�n ?? t�m in ra m�n h�nh s?
-     * nguy�n N th?a m�n ?i?u ki?n l� s? ch?n v� chia h?t cho 3 c?a d�y s?
-     * nguy�n A, d�y s? ???c cho tr?c ti?p trong m� l?nh (v� d?: int
+     * Viết chương trình thòa mãn các yêu cầu sau: a.	Xây dựng một phương thức
+     * để xác định xem một số nguyên N có phải là số chẵn và chia hết cho 3 hay
+     * không. b.	Sử dụng phương thức vừa viết ở trên để tìm in ra màn hình số
+     * nguyên N thỏa mãn điều kiện là số chẵn và chia hết cho 3 của dãy số
+     * nguyên A, dãy số được cho trực tiếp trong mã lệnh (ví dụ: int
      * a[20]={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20})
-     *
      *
      *
      */
