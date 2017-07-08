@@ -14,6 +14,15 @@ public class SanPham {
     private String tensp;
     private int dongiaban;
 
+    public SanPham() {
+    }
+
+    public SanPham(String masp, String tensp, int dongiaban) {
+        this.masp = masp;
+        this.tensp = tensp;
+        this.dongiaban = dongiaban;
+    }
+
     public String getMasp() {
         return masp;
     }
