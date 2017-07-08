@@ -1,0 +1,14 @@
+Các câu còn lại giống câu 2 nên bạn ko làm nữa^^
+      ----để vẽ lại tiêu đề pannel------
+      *Copy vào Code Customize: jPanel1.setBorder(BorderFactory.createTitledBorder("Thêm mới")); 
+    
+    
+    ----Để thêm 1 dòng vào table-----
+      Add row to Table SanPham e = new SanPham(); e.setMasp(txt_msp.getText());
+      e.setTensp(txt_tsp.getText());
+      e.setDongiaban(Integer.parseInt(txtgia.getText()));
+     
+     DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+     Vector row = new Vector(); row.add(e.getMasp()); row.add(e.getTensp());
+     row.add(e.getDongiaban()); model.addRow(row);
+     
