@@ -150,9 +150,9 @@ public class Gui extends javax.swing.JFrame {
         DsSp.add(e);
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        Vector row = new Vector();
+       
         for (int i = 0; i < DsSp.size(); i++) {
-            
+            Vector row = new Vector();
             row.add(DsSp.get(i).getMasp());
             row.add(DsSp.get(i).getTensp());
             row.add(DsSp.get(i).getDongiaban());

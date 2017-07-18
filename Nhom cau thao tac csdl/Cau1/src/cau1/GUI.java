@@ -5,6 +5,8 @@
  */
 package cau1;
 
+import javax.swing.BorderFactory;
+
 /**
  *
  * @author HM

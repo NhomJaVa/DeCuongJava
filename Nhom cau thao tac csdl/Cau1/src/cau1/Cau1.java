@@ -15,7 +15,10 @@ public class Cau1 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+       GUI f =new GUI();
+       f.setSize(600,600);
+       f.setVisible(true);
+       
     }
     
 }
