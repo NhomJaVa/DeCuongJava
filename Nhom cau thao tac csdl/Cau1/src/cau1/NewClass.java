@@ -85,30 +85,14 @@ public class arraylist {
 		return con;
 	}
 	
-	public ArrayList<User> userList(){
-		ArrayList<User> userList = new ArrayList<User>();
-		try{
-        	Connection con = getConnection();
-        	String query1 = "SELECT *FROM LOAIHANG";
-        	Statement st = con.createStatement();
-        	ResultSet rs = st.executeQuery(query1);
-        	User user;
-        	while(rs.next()){
-        		user = new User(rs.getString("maLH"), rs.getString("tenLH"));
-        		userList.add(user);
-        	}
-        }catch(Exception c){
-        	JOptionPane.showMessageDialog(null, c);
-        }
-		return userList;
-	}
+	
 	
 	public void executeSQLQuery(String query, String message){
 		Connection con = getConnection();
 		Statement st;
 		try{
 			st = con.createStatement();
-			if(st.executeUpdate(query) == 1){
+			if(st.executeUpdate(query) >0){
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
 				model.setRowCount(0);
 				load_user();
@@ -122,7 +106,7 @@ public class arraylist {
 	}
 	
 	public void load_user(){
-		ArrayList<User> list = userList();
+		ArrayList<NhanVien> list = userList();
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		Object[] row = new Object[2];
 		for(int i =0; i<list.size();i++){

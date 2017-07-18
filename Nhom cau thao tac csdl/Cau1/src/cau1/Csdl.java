@@ -16,6 +16,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -25,110 +28,66 @@ public class Csdl {
 
     public static Connection conn = null;
     public static Statement stmt = null;
+    private static String connectionString = null;
 
-    private static String DB_URL = "";
 
-    public Csdl() {
-        DB_URL="jdbc:sqlserver://localhost\\sqlexpress;databaseName=QLSV;user=sa;password=123;port=1433;";
+    /*  public Csdl() {
+        DB_URL = "jdbc:sqlserver://localhost\\sqlexpress;databaseName=QLNV;user=sa;password=123;port=1433;";
+    }*/
+    public static Connection getConnection() {
+        Connection con;
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            connectionString = "jdbc:sqlserver://localhost\\sqlexpress;databaseName=QLNV;port=1433;";
+            String userName = "sa";
+            String passWord = "123";
+            System.out.println("Connecting..");
+            con = DriverManager.getConnection(connectionString, userName, passWord);
+            System.out.println("Connected..");
+
+        } catch (Exception e) {
+            e.getStackTrace();
+            System.out.println("Disconnect...");
+
+            return null;
+        }
+        return con;
     }
 
-    public void Open() {
+    public ResultSet GetData(String sql) {
+        ResultSet bang = null;
         try {
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL);
-            System.out.println("Connected...");
+            Statement lenh = this.conn.createStatement();
+            bang = lenh.executeQuery(sql);
         } catch (SQLException ex) {
-            Logger.getLogger(Csdl.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Connect fail...");
+            JOptionPane.showMessageDialog(null, "Câu lệnh truy vấn không đúng");
         }
+        return bang;
     }
 
-    /*
-    thuc thi cau lenh sql update
-    vidu:
-    cmd="insert into table values ('a','b')"
-     */
-    public int ExcuteNonQuery(String cmd) {
-        int rows = 0;
-        System.out.println("Creating statement...");
-        Open();
-        System.out.println("Creating statement...");
+    public boolean CapNhat(String str) {
         try {
-            stmt = conn.createStatement();
-            rows = stmt.executeUpdate(cmd);
+            Statement lenh = this.conn.createStatement();
+            lenh.execute(str);
         } catch (SQLException ex) {
-            Logger.getLogger(Csdl.class.getName()).log(Level.SEVERE, null, ex);
-
+            JOptionPane.showMessageDialog(null, "Câu lệnh truy vấn không đúng");
+            return false;
         }
-        System.out.println("Rows impacted : " + rows);
+        return true;
+    }
 
-        try {
-            if (conn != null) {
-                conn.close();
+    public void DongKetNoi() {
+        if (this.conn != null) {
+            try {
+                this.conn.close();
+            } catch (SQLException ex) {
+                //JOptionPane.showMessageDialog(null, ex.toString());
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(Csdl.class.getName()).log(Level.SEVERE, null, ex);
-
         }
-        return rows;
-    }
-
-    public ResultSet executeQuery(String cmd) {
-        ResultSet rs = null;
-
-        try {
-            Open();
-            rs = stmt.executeQuery(cmd);
-             stmt.close();
-             conn.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(Csdl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            if (conn != null) {
-                conn.close();
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Csdl.class.getName()).log(Level.SEVERE, null, ex);
-
-        }
-        return rs;
     }
 
     public static void main(String[] args) {
         Csdl csdl = new Csdl();
-        try {
-
-            //Execute a query
-            // Let us select all the records and display them.
-           String sql = "SELECT * FROM MonHoc";
-          ResultSet rs=  csdl.executeQuery(sql);
-
-            //Extract data from result set
-            while (rs.next()) {
-                //Retrieve by column name
-
-                String MaMH = rs.getString("MaMH");
-                String TenMH = rs.getString("TenMH");
-                String DVHT = rs.getString("SoDVHT");
-
-                //Display values
-                System.out.print("MaMH: " + MaMH);
-                System.out.print(", Ten mh: " + TenMH);
-                System.out.print(", sdvht: " + DVHT);
-
-            }
-
-            //Clean-up environment
-            rs.close();
-            
-        } catch (SQLException se) {
-            //Handle errors for JDBC
-            se.printStackTrace();
-        } finally {
-            //finally block used to close resources
-           
-        }//end try
-        System.out.println("Done!");
+        csdl.getConnection();
     }
 }

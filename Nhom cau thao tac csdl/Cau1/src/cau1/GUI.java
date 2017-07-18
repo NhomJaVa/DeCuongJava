@@ -5,7 +5,10 @@
  */
 package cau1;
 
+
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,6 +19,7 @@ public class GUI extends javax.swing.JFrame {
     /**
      * Creates new form GUI
      */
+    NhanVien nhanvien = new NhanVien();
     public GUI() {
         initComponents();
     }
@@ -44,6 +48,11 @@ public class GUI extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBorder(BorderFactory.createTitledBorder("Thao tác"));
 
@@ -54,6 +63,11 @@ public class GUI extends javax.swing.JFrame {
         jLabel3.setText("Tuổi");
 
         btn_them.setText("Thêm");
+        btn_them.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_themActionPerformed(evt);
+            }
+        });
 
         btn_sua.setText("Sửa");
 
@@ -107,6 +121,7 @@ public class GUI extends javax.swing.JFrame {
         );
 
         jPanel1.setBorder(BorderFactory.createTitledBorder("Danh sách nhân viên"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Danh sách nhân viên"));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -127,16 +142,16 @@ public class GUI extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -152,11 +167,32 @@ public class GUI extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+public void load_user(){
+                
+		ArrayList<NhanVien> list = nhanvien.nhanvienList();
+		DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+		Object[] row = new Object[3];
+                model.setRowCount(0);
+		for(int i =0; i<list.size();i++){
+			row[0] = list.get(i).getMaNV();
+			row[1] = list.get(i).getTenNV();
+			row[2] = list.get(i).getTuoi(1);
+			model.addRow(row);
+		}
+	}
+    private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
+        
+        
+    }//GEN-LAST:event_btn_themActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        load_user();
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
