@@ -81,6 +81,11 @@ public class GUI extends javax.swing.JFrame {
         });
 
         btn_xoa.setText("Xóa");
+        btn_xoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_xoaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -144,6 +149,11 @@ public class GUI extends javax.swing.JFrame {
             }
         ));
         jTable1.setColumnSelectionAllowed(true);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
         jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
@@ -231,6 +241,30 @@ public void load_user(){
             Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btn_suaActionPerformed
+public void getSelectedData(){
+         int selectedRow=jTable1.getSelectedRow();
+        txt_mnv.setText(jTable1.getValueAt(selectedRow,0).toString());
+         txtTen.setText(jTable1.getValueAt(selectedRow,1).toString());
+         txtTuoi.setText(jTable1.getValueAt(selectedRow,2).toString());
+     }
+    private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
+         PreparedStatement stmt = null;
+        Csdl csdl = new Csdl();
+        String sql = "Delete NhanVien Where MaNV=?";
+        try {
+            stmt = csdl.getConnection().prepareStatement(sql);
+            //Bind values into the parameters.
+            stmt.setString(1, txt_mnv.getText()); 
+            csdl.CapNhat(stmt);
+             load_user();
+        } catch (SQLException ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_xoaActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+      getSelectedData();
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
