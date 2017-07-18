@@ -63,7 +63,7 @@ public class Csdl {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Lỗi tải dữ liệu");
         }
-        DongKetNoi();
+        
         return bang;
     }
 
@@ -75,23 +75,15 @@ public class Csdl {
             JOptionPane.showMessageDialog(null, "Lỗi cập nhật");
             return false;
         } 
-        DongKetNoi();
+       
         return true;
     }
 
-    public void DongKetNoi() {
-        if (this.conn != null) {
-            try {
-                this.conn.close();
-                System.out.println("Disconnect..");
-            } catch (SQLException ex) {
-                //JOptionPane.showMessageDialog(null, ex.toString());
-            }
-        }
-    }
+
 
     public static void main(String[] args) {
         Csdl csdl = new Csdl();
         csdl.getConnection();
+      
     }
 }

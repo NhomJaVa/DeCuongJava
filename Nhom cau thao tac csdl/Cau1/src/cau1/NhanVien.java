@@ -59,9 +59,11 @@ public class NhanVien {
                 NhanVien nv = new NhanVien(rs.getString("MaNV"), rs.getString("tenNV"),rs.getInt("tuoi"));
                 NhanVienList.add(nv);
             }
+            con.close();
         } catch (Exception c) {
             JOptionPane.showMessageDialog(null, c);
         }
+        
         return NhanVienList;
     }
 }
