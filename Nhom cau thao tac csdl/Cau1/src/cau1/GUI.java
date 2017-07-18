@@ -6,7 +6,11 @@
 package cau1;
 
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.table.DefaultTableModel;
 
@@ -70,6 +74,11 @@ public class GUI extends javax.swing.JFrame {
         });
 
         btn_sua.setText("Sửa");
+        btn_sua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_suaActionPerformed(evt);
+            }
+        });
 
         btn_xoa.setText("Xóa");
 
@@ -142,16 +151,12 @@ public class GUI extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 542, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -186,13 +191,46 @@ public void load_user(){
 		}
 	}
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
-        
+        PreparedStatement stmt = null;
+        Csdl csdl = new Csdl();
+        String sql = "Insert into NhanVien Values(?,?,?)";
+       
+        try {
+            stmt = csdl.getConnection().prepareStatement(sql);
+            //Bind values into the parameters.
+            stmt.setString(1, txt_mnv.getText()); 
+            stmt.setString(2, txtTen.getText()); 
+            stmt.setInt(3,Integer.parseInt(txtTuoi.getText()));
+            csdl.CapNhat(stmt);
+             load_user();
+        } catch (SQLException ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_btn_themActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         load_user();
     }//GEN-LAST:event_formWindowOpened
+
+    private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
+        PreparedStatement stmt = null;
+        Csdl csdl = new Csdl();
+        String sql = "Update NhanVien set TenNV=?,tuoi=? Where MaNV=?";
+       
+        try {
+            stmt = csdl.getConnection().prepareStatement(sql);
+            //Bind values into the parameters.
+       
+            stmt.setString(1, txtTen.getText()); 
+            stmt.setInt(2,Integer.parseInt(txtTuoi.getText()));
+            stmt.setString(3, txt_mnv.getText()); 
+            csdl.CapNhat(stmt);
+             load_user();
+        } catch (SQLException ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_suaActionPerformed
 
     /**
      * @param args the command line arguments

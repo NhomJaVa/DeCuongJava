@@ -11,6 +11,7 @@ package cau1;
  */
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -54,23 +55,22 @@ public class Csdl {
         return con;
     }
 
-    public ResultSet GetData(String sql) {
+    public ResultSet GetData(String str) {
         ResultSet bang = null;
         try {
             Statement lenh = this.conn.createStatement();
-            bang = lenh.executeQuery(sql);
+            bang = lenh.executeQuery(str);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Câu lệnh truy vấn không đúng");
+            JOptionPane.showMessageDialog(null, "Lỗi tải dữ liệu");
         }
         return bang;
     }
 
-    public boolean CapNhat(String str) {
+    public boolean CapNhat( PreparedStatement lenh) {
         try {
-            Statement lenh = this.conn.createStatement();
-            lenh.execute(str);
+            lenh.executeUpdate();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Câu lệnh truy vấn không đúng");
+            JOptionPane.showMessageDialog(null, "Lỗi cập nhật");
             return false;
         }
         return true;
